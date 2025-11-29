@@ -1,4 +1,4 @@
-name: Deploy Legendsansar Frontend
+name: Deploy Frontend
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
             rm -rf /var/www/legendsansar/frontend/dist/*
             mkdir -p /var/www/legendsansar/frontend/dist
 
-      - name: Upload new dist
+      - name: Upload new dist folder
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.HOST }}
