@@ -1,0 +1,42 @@
+name: Deploy Legendsansar Frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+
+jobs:
+  frontend-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install & Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Clean old dist on server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            rm -rf /var/www/legendsansar/frontend/dist/*
+            mkdir -p /var/www/legendsansar/frontend/dist
+
+      - name: Upload new dist
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "frontend/dist/**"
+          target: "/var/www/legendsansar/frontend/dist"
+          overwrite: true
+          strip_components: 2
