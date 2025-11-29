@@ -1,0 +1,41 @@
+name: Deploy Legendsansar Backend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+
+jobs:
+  backend-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload backend files (without .env)
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "backend/**"
+          target: "/var/www/legendsansar/backend"
+          overwrite: true
+          strip_components: 1
+          exclude: |
+            backend/.env
+            backend/node_modules/**
+
+      - name: Install & Restart backend
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/legendsansar/backend
+            npm install --production
+            pm2 restart legendsansar-backend || pm2 start server.js --name legendsansar-backend
+            pm2 save
