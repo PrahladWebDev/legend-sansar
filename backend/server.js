@@ -30,4 +30,4 @@ app.use('/api/admin', adminRoutes);
 
 
 const PORT = process.env.PORT || 6000;
-app.listen(PORT, () => console.log(`Server runnings on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
