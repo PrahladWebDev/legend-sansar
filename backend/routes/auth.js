@@ -25,7 +25,7 @@ async function sendEmail({ to, subject, html }) {
   
   try {
     const response = await resend.emails.send({
-      from: "LegendSansar <no-reply@webdevprahlad.site>",
+      from: "LegendSansar <no-reply@prahladsingh.in>",
       to,
       subject,
       html,
