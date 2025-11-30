@@ -1,10 +1,16 @@
 import React from 'react';
 import './FloatingGlobe.css';
+import { useNavigate } from 'react-router-dom';
 
 const FloatingGlobe = () => {
+  const navigate = useNavigate();
+  const handleGlobeClick = () => {
+    navigate('/map'); // Navigate to map page
+    // Or you could open a modal, scroll to top, etc.
+  };
   return (
     <div className="floating-globe-container">
-      <div className="floating-globe">
+      <div className="floating-globe" onClick={handleGlobeClick}>
         <div className="globe-icon">
           <svg
             viewBox="0 0 100 100"
