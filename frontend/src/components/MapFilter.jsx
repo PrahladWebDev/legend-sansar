@@ -62,8 +62,9 @@ function CountryMap() {
 
           try {
             const response = await fetch(
-              `/api/folktales?region=${encodeURIComponent(country)}`
-            );
+  `https://apilegendsansar.prahladsingh.in/api/folktales?region=${encodeURIComponent(country)}`,
+  { cache: "no-store" }
+);
             const data = await response.json();
             
             if (data.folktales && data.folktales.length > 0) {
