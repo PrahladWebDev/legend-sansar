@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import MapFolktaleExplorer from "./components/MapFilter";
 import BookmarkedFolktale from "./pages/BookmarkedFolktale";
 import Profile from './components/Profile';
+import FloatingGlobe from './components/FloatingGlobe'; // Add this import
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+      {/* Add the Floating Globe - it will appear on every page */}
+        <FloatingGlobe />
     </Router>
   );
 }
